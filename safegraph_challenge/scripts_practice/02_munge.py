@@ -43,5 +43,9 @@ dcsv_parsed\
 # `explode()`, `with_columns()`, `.cum_counts()`, `.over()`, `pl.duration()`, `.dt.weekday()`, `.replace()`, `.filter()`
 dcsv_parsed\
     .select("placekey", "date_range_start", "visits_by_day")\
- # let's create the code.  First, try writing out the structure in English...
+    .explode("visits_by_day")\
+    .with_columns(
+        pl.col("visits_by_day").cum_count().over(["placekey", "date_range_start"])-1
+    )
+    
 # %%

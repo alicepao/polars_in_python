@@ -49,3 +49,7 @@ dat_final
 dat_final.write_parquet("../data/dat_munged.parquet")
 dat_final.write_csv("../data/dat_munged.csv")
 # %%
+
+# unnest is for struct and explode is for list
+
+# dat.schema/dat.print_schema()

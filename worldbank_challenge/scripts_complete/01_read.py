@@ -28,7 +28,11 @@ dat = pl.read_csv("../data/API_Download_DS2_en_csv_v2_5657328.csv",
 dat
 # %%
 # We don't like the World Banks wide format.  Let's clean it upt to long format.
-dat_long = dat.melt(id_vars=["Country Name", "Country Code", "Indicator Name", "Indicator Code"])
+dat_long = dat\
+    .melt(id_vars=["Country Name", "Country Code", "Indicator Name", "Indicator Code"])\
+        .with_columns([pl.col("variable").cast(pl.Int32).alias("year")])\
+        
+        
 dat_long
 # %%
 dat_long.write_csv("../data/long.csv")

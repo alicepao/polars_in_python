@@ -22,13 +22,15 @@ patterns.select("placekey", "related_same_day_brand").explode("related_same_day_
 ## These two should read in identical
 dat_csv = pl.from_arrow(
         csv.read_csv("../data/chipotle_core_poi_and_patterns.csv"))\
-    .filter(pl.col("date_range_start").is_not_null())
+    .filter(pl.col("date_range_start").is_not_null()) # drop the date that's null
 dcsv = pl.from_arrow(
         ds.dataset(
             "../data/chipotle_core_poi_and_patterns.csv",
             format="csv")\
         .to_table())\
     .filter(pl.col("date_range_start").is_not_null())
+
+# dat_csv & dcsv are the same thing, just different way to read it
 
 dcsv_parsed = dcsv.with_columns(
     visits_by_day=pl.col("visits_by_day").str.json_decode(pl.List(pl.Int32)),
